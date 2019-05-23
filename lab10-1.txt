@@ -1,0 +1,23 @@
+#include <IRremote.h>
+
+int RECV_PIN = 2;
+
+IRrecv irrecv(RECV_PIN);
+decode_results results;
+
+void setup()
+{
+  Serial.begin(9600);
+  Serial.println("Enabling IRin");
+  irrecv.enableIRIn();
+}
+
+void loop() {
+  if (irrecv.decode(&results)) {
+    Serial.print("irCode: ");
+    Serial.println(results.value, HEX);
+    Serial.print(", bits:");
+    Serial.println(results.bits);
+    irrecv.resume(); // Receive the next value
+  }
+}
